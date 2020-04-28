@@ -1,0 +1,112 @@
+<template>
+  <div>
+    <h1 class="px30">Collections</h1>
+    <div
+      class="collection-preview"
+      v-for="(collections, routeName, index) in collection"
+      :key="index"
+    >
+      <router-link tag="h1" class="title" :to="{ path: collections.routeName }"
+        >{{ collections.title.toUpperCase() }}
+      </router-link>
+
+      <div class="preview">
+        <div
+          class="collection-item"
+          v-for="(collection2, index) in limitBy(collections.items, 4)"
+          :key="index"
+        >
+          <div
+            class="image"
+            :style="{ backgroundImage: 'url(' + collection2.imageUrl + ')' }"
+          />
+          <div class="collection-footer">
+            <span class="name">{{ collection2.name }}</span>
+            <span class="price">${{ collection2.price }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import Vue2Filters from 'vue2-filters'
+import collection from '../../data'
+
+export default {
+  name: 'Shop',
+  components: {},
+  data() {
+    return {
+      collection: this.$store.state.shopCollection
+    }
+  },
+  mixins: [Vue2Filters.mixin]
+}
+</script>
+
+<style lang="scss" scoped>
+.px30 {
+  padding: 0 30px;
+}
+.collection-preview {
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+
+  .title {
+    font-size: 28px;
+    margin-bottom: 25px;
+    width: 100%;
+    display: inline-block;
+
+    &:hover {
+      cursor: pointer;
+      color: rgb(226, 135, 82);
+    }
+  }
+
+  .preview {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+.collection-item {
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  align-items: center;
+  &:not(:last-child) {
+    margin-right: 3%;
+  }
+
+  .image {
+    width: 100%;
+    height: 95%;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 5px;
+  }
+
+  .collection-footer {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+
+    .name {
+      width: 90%;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      width: 10%;
+    }
+  }
+}
+</style>
