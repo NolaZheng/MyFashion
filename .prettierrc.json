@@ -1,0 +1,12 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "jsxBracketSameLine": true,
+  "jsxSingleQuote": true,
+  "resolveGlobalModules": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "vueIndentScriptAndStyle": false,
+  "bracketSpacing": true,
+  "arrowParens": "always"
+}
