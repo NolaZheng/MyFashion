@@ -2,7 +2,7 @@ export default [
     {
       id: 1,
       title: 'Hats',
-      routeName: '/hats',
+      routeName: 'hats',
       items: [
         {
           id: 1,
@@ -63,7 +63,7 @@ export default [
     {
       id: 2,
       title: 'Sneakers',
-      routeName: '/sneakers',
+      routeName: 'sneakers',
       items: [
         {
           id: 10,
@@ -118,7 +118,7 @@ export default [
     {
       id: 3,
       title: 'Jackets',
-      routeName: '/jackets',
+      routeName: 'jackets',
       items: [
         {
           id: 18,
@@ -155,7 +155,7 @@ export default [
     {
       id: 4,
       title: 'Womens',
-      routeName: '/womens',
+      routeName: 'womens',
       items: [
         {
           id: 23,
@@ -204,7 +204,7 @@ export default [
     {
       id: 5,
       title: 'Mens',
-      routeName: '/mens',
+      routeName: 'mens',
       items: [
         {
           id: 30,

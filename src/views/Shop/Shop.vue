@@ -33,14 +33,14 @@
 <script>
 // @ is an alias to /src
 import Vue2Filters from 'vue2-filters'
-import collection from '../../data'
+import collection from '../../data/shop-items'
 
 export default {
   name: 'Shop',
   components: {},
   data() {
     return {
-      collection: this.$store.state.shopCollection
+      collection
     }
   },
   mixins: [Vue2Filters.mixin]

@@ -9,7 +9,7 @@
         <router-link to="/shop">Shop</router-link> |
         <router-link to="/contact">Contact</router-link> |
         <router-link to="/signin" v-if="!auth">Sign in</router-link>
-        <a class="logout" @click="logout" v-if="!auth">Log out</a>
+        <a class="logout" @click="logout" v-if="auth">Log out</a>
       </div>
     </div>
     <transition name="fade" mode="out-in">
@@ -26,7 +26,9 @@ export default {
     }
   },
   methods: {
-    lo
+    logout() {
+      this.$store.dispatch('logout')
+    }
   }
 }
 </script>
