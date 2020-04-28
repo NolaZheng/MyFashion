@@ -7,7 +7,7 @@
       <div class="group">
         <input
           class="form-input"
-          id="email"
+          id="email-in"
           name="email"
           type="email"
           v-model="email"
@@ -21,7 +21,7 @@
       <div class="group">
         <input
           class="form-input"
-          id="password"
+          id="password-in"
           name="password"
           type="password"
           v-model="password"
@@ -61,14 +61,10 @@ export default {
         password: this.password
       }
       console.log(signInData)
-      axios
-        .post('/accounts:signUp?key=AIzaSyDbSlPHSzcv49d3dtzZPR1Ld90_GaqMJ1Q', {
-          email: signUpData.email,
-          password: signUpData.password,
-          returnSecureToken: true
-        })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
+      this.$store.dispatch('login', {
+        email: signInData.email,
+        password: signInData.password
+      })
     }
   }
 }

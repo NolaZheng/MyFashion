@@ -54,7 +54,7 @@ const actions = {
           idToken: res.data.idToken,
           userId: res.data.localId
         })
-        dispatch('storeUser', { authData })
+        dispatch('storeUser', authData)
       })
       .catch((err) => console.log(err))
   },
@@ -95,12 +95,15 @@ const actions = {
   },
 
   fetchUser ({ commit, state }) {
+    if (!state.idToken) {
+      return
+    }
     globalAxios.get('/users.json' + '?auth=' + state.idToken)
-      .then((res) => {
+      .then(res => {
         console.log(res)
         const data = res.data
         const users = []
-        for (const key in data) {
+        for (let key in data) {
           const user = data[key]
           user.id = key
           users.push(user)
@@ -108,7 +111,7 @@ const actions = {
         console.log(users)
         commit('storeUser', users[0])
       })
-      .catch((error) => console.log(error))
+      .catch(error => console.log(error))
   }
 }
 

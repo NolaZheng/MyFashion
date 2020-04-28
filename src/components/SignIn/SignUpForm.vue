@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import axios from '../../axios-auth'
 import { required, minLength, between, email } from 'vuelidate/lib/validators'
 
 export default {
@@ -102,7 +103,7 @@ export default {
         console.log(signUpData)
         this.$store.dispatch('signup', signUpData)
       } else {
-        alert('Not correct!')
+        alert('ConfirmPassword is Not correct!')
       }
     }
   }
