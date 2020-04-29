@@ -25,36 +25,35 @@
           name="email"
           type="text"
           v-model="email"
-          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
         />
         <label class="form-input-label" :class="[email ? 'shrink' : '']">
           Email
         </label>
-        <span v-if="!$v.email.email">Please enter a valid email</span>
       </div>
 
-      <div class="group">
+      <div class="group" :class="{ invalid: $v.password.$error }">
         <input
           class="form-input"
           id="password"
           name="password"
           type="password"
           v-model="password"
-          required
+          @blur="$v.password.$touch()"
         />
         <label class="form-input-label" :class="[password ? 'shrink' : '']">
-          Password
+          Password : ( length > 6 )
         </label>
       </div>
 
-      <div class="group">
+      <div class="group" :class="{ invalid: $v.confirmPassword.$error }">
         <input
           class="form-input"
           id="confirmPassword"
           name="confirmPassword"
           type="password"
           v-model="confirmPassword"
-          required
+          @blur="$v.confirmPassword.$touch()"
         />
         <label
           class="form-input-label"
@@ -73,7 +72,7 @@
 
 <script>
 import axios from '../../axios-auth'
-import { required, minLength, between, email } from 'vuelidate/lib/validators'
+import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
 
 export default {
   name: 'SignUpForm',
@@ -89,6 +88,14 @@ export default {
     email: {
       required,
       email
+    },
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    confirmPassword: {
+      required,
+      sameAsPassword: sameAs('password')
     }
   },
   methods: {
@@ -99,12 +106,9 @@ export default {
         password: this.password,
         confirmPassword: this.confirmPassword
       }
-      if (this.password === this.confirmPassword) {
-        console.log(signUpData)
-        this.$store.dispatch('signup', signUpData)
-      } else {
-        alert('ConfirmPassword is Not correct!')
-      }
+      console.log(signUpData)
+      this.$store.dispatch('signup', signUpData)
+      alert('ConfirmPassword is Not correct!')
     }
   }
 }

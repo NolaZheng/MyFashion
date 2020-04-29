@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="shop">
     <h1 class="px30">Collections</h1>
     <div
       class="collection-preview"
@@ -24,6 +24,9 @@
             <span class="name">{{ collection2.name }}</span>
             <span class="price">${{ collection2.price }}</span>
           </div>
+          <button class="custom-button inverted">
+            Add to cart
+          </button>
         </div>
       </div>
     </div>
@@ -48,8 +51,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.shop {
+  padding: 20px 40px;
+}
 .px30 {
   padding: 0 30px;
+  margin-bottom: 20px;
 }
 .collection-preview {
   padding: 0 30px;
@@ -75,11 +82,12 @@ export default {
   }
 }
 .collection-item {
-  width: 22%;
+  width: 24%;
   display: flex;
   flex-direction: column;
   height: 450px;
   align-items: center;
+  position: relative;
   &:not(:last-child) {
     margin-right: 3%;
   }
@@ -90,6 +98,25 @@ export default {
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
+  }
+
+  .custom-button {
+    width: 80%;
+    opacity: 0.7;
+    position: absolute;
+    top: 340px;
+    display: none;
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8;
+    }
+
+    .custom-button {
+      opacity: 0.85;
+      display: flex;
+    }
   }
 
   .collection-footer {
@@ -106,6 +133,41 @@ export default {
 
     .price {
       width: 10%;
+    }
+  }
+}
+.custom-button {
+  min-width: 165px;
+  width: auto;
+  height: 50px;
+  letter-spacing: 0.5px;
+  line-height: 50px;
+  padding: 0 35px 0 35px;
+  font-size: 15px;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+  font-family: 'Open Sans Condensed';
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+  &.inverted {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      background-color: black;
+      color: white;
+      border: none;
     }
   }
 }
