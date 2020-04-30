@@ -17,31 +17,88 @@
         <span>Remove</span>
       </div>
     </div>
-    <div class="checkout-item">
+    <div
+      class="checkout-item"
+      v-for="(item, index) in orderList"
+      :key="index"
+      :item="item"
+    >
       <div class="image-container">
-        <img src="https://i.ibb.co/cvpntL1/hats.png" alt="item" />
+        <div
+          class="image"
+          :style="{ backgroundImage: 'url(' + item.img + ')' }"
+        />
       </div>
-      <span class="name">{name}</span>
+      <span class="name">{{ item.name }}</span>
       <span class="quantity">
-        <div class="arrow">
+        <div
+          class="arrow"
+          @click="minusItem(item.name, item.price, item.quantity)"
+        >
           &#10094;
         </div>
-        <span class="value">{quantity}</span>
-        <div class="arrow">
+        <span class="value">{{ item.quantity }}</span>
+        <div
+          class="arrow"
+          @click="plusItem(item.name, item.img, item.price, item.quantity)"
+        >
           &#10095;
         </div>
       </span>
-      <span class="price">{price}</span>
-      <div class="remove-button">
+      <span class="price">{{ item.price * item.quantity }}</span>
+      <div class="remove-button" @click="removeItem(item.name)">
         &#10005;
       </div>
     </div>
-    <div class="total">TOTAL: ${total}</div>
+    <div class="total">TOTAL: ${{ allPrice }}</div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    this.$store.dispatch('fetchItem')
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    orderList() {
+      return this.$store.getters.cartItems
+    },
+    itemCount() {
+      return this.$store.getters.itemCount
+    },
+    allPrice() {
+      return this.$store.getters.allPrice
+    }
+  },
+  methods: {
+    plusItem(name, img, price, q) {
+      const cartItem = {
+        name,
+        img,
+        price,
+        totalPrice: price,
+        quantity: 1
+      }
+      // console.log(cartItem)
+      this.$store.dispatch('buyItem', cartItem)
+      q += 1
+    },
+    removeItem(name) {
+      this.$store.dispatch('removeItem', name)
+    },
+    minusItem(name, price, q) {
+      if (q <= 1) {
+        this.$store.dispatch('removeItem', name)
+      } else {
+        q -= 1
+        this.$store.dispatch('minusItem', { name, price })
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -56,6 +113,8 @@ export default {}
   .checkout-header {
     width: 100%;
     padding: 10px 0;
+    font-size: 20px;
+    font-weight: 700;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid darkgrey;
@@ -85,15 +144,21 @@ export default {}
   padding: 15px 0;
   font-size: 20px;
   align-items: center;
+  justify-content: center;
 
   .image-container {
     width: 20%;
     padding-right: 15px;
     height: 135px;
+    justify-self: start;
 
-    img {
+    .image {
       width: 100%;
       height: 100%;
+      margin-left: -35px;
+
+      background-size: cover;
+      background-position: center;
     }
   }
   .name,

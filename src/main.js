@@ -15,6 +15,7 @@ axios.defaults.baseURL = 'https://my-fashion-2dcd0.firebaseio.com/'
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,

@@ -17,7 +17,12 @@
           <span class="name">{{ collections.name }}</span>
           <span class="price">${{ collections.price }}</span>
         </div>
-        <button class="custom-button inverted">
+        <button
+          class="custom-button inverted"
+          @click="
+            addToCart(collections.name, collections.imageUrl, collections.price)
+          "
+        >
           Add to cart
         </button>
       </div>
@@ -34,6 +39,19 @@ export default {
   data() {
     return {
       collection: collection[2].items
+    }
+  },
+  methods: {
+    addToCart(name, img, price) {
+      const cartItem = {
+        name,
+        img,
+        price,
+        totalPrice: price,
+        quantity: 1
+      }
+      console.log(cartItem)
+      this.$store.dispatch('buyItem', cartItem)
     }
   }
 }

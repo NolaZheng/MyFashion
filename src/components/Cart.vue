@@ -1,16 +1,22 @@
 <template>
   <div class="cart-dropdown">
     <div class="cart-items">
-      <div class="cart-item">
-        <img src="https://i.ibb.co/cvpntL1/hats.png" alt="item" />
+      <div class="cart-item" v-for="(item, index) in orderList" :key="index">
+        <div
+          class="image"
+          :style="{ backgroundImage: 'url(' + item.img + ')' }"
+        />
         <div class="item-details">
-          <span class="name">abc</span>
+          <span class="name">{{ item.name }}</span>
           <span class="price">
-            $123
-          </span>
+            ${{ item.price }} x {{ item.quantity }} =
+            {{ item.price * item.quantity }}</span
+          >
         </div>
       </div>
-      <span class="empty-message">Your cart is empty</span>
+      <span class="empty-message" v-if="itemCount == 0"
+        >Your cart is empty</span
+      >
     </div>
     <router-link tag="button" to="/checkout" class="custom-button">
       GO TO CHECKOUT
@@ -20,7 +26,21 @@
 
 <script>
 export default {
-  name: 'CartItem'
+  name: 'CartItem',
+  created() {
+    this.$store.dispatch('fetchItem')
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    orderList() {
+      return this.$store.getters.cartItems
+    },
+    itemCount() {
+      return this.$store.getters.itemCount
+    }
+  }
 }
 </script>
 
@@ -61,8 +81,10 @@ export default {
   height: 80px;
   margin-bottom: 15px;
 
-  img {
+  .image {
     width: 45%;
+    background-size: cover;
+    background-position: center;
   }
 
   .item-details {

@@ -5,6 +5,7 @@
       class="collection-preview"
       v-for="(collections, routeName, index) in collection"
       :key="index"
+      :collections="collections"
     >
       <router-link tag="h1" class="title" :to="{ path: collections.routeName }"
         >{{ collections.title.toUpperCase() }}
@@ -24,7 +25,16 @@
             <span class="name">{{ collection2.name }}</span>
             <span class="price">${{ collection2.price }}</span>
           </div>
-          <button class="custom-button inverted">
+          <button
+            class="custom-button inverted"
+            @click="
+              addToCart(
+                collection2.name,
+                collection2.imageUrl,
+                collection2.price
+              )
+            "
+          >
             Add to cart
           </button>
         </div>
@@ -46,7 +56,20 @@ export default {
       collection
     }
   },
-  mixins: [Vue2Filters.mixin]
+  mixins: [Vue2Filters.mixin],
+  methods: {
+    addToCart(name, img, price) {
+      const cartItem = {
+        name,
+        img,
+        price,
+        totalPrice: price,
+        quantity: 1
+      }
+      console.log(cartItem)
+      this.$store.dispatch('buyItem', cartItem)
+    }
+  }
 }
 </script>
 

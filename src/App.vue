@@ -16,7 +16,7 @@
             alt="Shopping bag"
             src="./assets/shopping-bag.svg"
           />
-          <span class="item-count">{{ itemCount }}</span>
+          <span class="item-count">{{ this.$store.getters.itemCount }}</span>
         </div>
         <CartItem v-if="show == true" />
       </div>
@@ -30,6 +30,9 @@
 <script>
 import Cart from './components/Cart.vue'
 export default {
+  created() {
+    this.$store.dispatch('fetchItem')
+  },
   components: {
     CartItem: Cart
   },
@@ -41,9 +44,6 @@ export default {
   computed: {
     auth() {
       return this.$store.getters.isAuthenticated
-    },
-    itemCount() {
-      return 2
     }
   },
   methods: {
