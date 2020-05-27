@@ -1,14 +1,4 @@
-# e-commerce
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# e-commerce website
 
 ### SKILLS
 * Setting up a development environment and workflow with Vue CLI.
